@@ -86,26 +86,35 @@
       display: grid;
       grid-template-columns: 1fr;
       align-items: center;
-      padding: 12px 48px;
+      padding: 18px 48px 12px;
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0;
       background: rgba(8,8,8,0.82);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       z-index: 100;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    nav.hidden {
+      transform: translateY(-100%);
+      box-shadow: none;
     }
     .nav-logo { display: flex; align-items: center; gap: 11px; text-decoration: none; }
     .nav-logo img  { width: 40px; height: 40px; }
     .nav-logo span { font-size: 18px; font-weight: 700; letter-spacing: 0.03em; color: var(--white); }
 
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%; background: var(--gold);
-      animation: blink 2.4s ease-in-out infinite;
+    /* ══════════ FOUNDER SECTION ══════════ */
+    .founder-bar {
+      background: rgba(255,209,102,0.04);
+      border-bottom: 1px solid rgba(255,209,102,0.1);
+      padding: 14px 48px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--muted);
+      letter-spacing: 0.05em;
     }
-    @keyframes blink {
-      0%,100% { opacity:1; transform:scale(1); }
-      50%      { opacity:.3; transform:scale(.7); }
-    }
+    .founder-bar span { color: var(--gold); font-weight: 600; }
 
     /* ══════════ HERO ══════════ */
     .hero {
@@ -121,7 +130,8 @@
       border: 1px solid rgba(255,209,102,0.28); border-radius: 100px;
       background: rgba(255,209,102,0.06);
       margin-bottom: 32px;
-      animation: fadeUp 0.7s 0.1s ease both;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease forwards;
     }
     .eyebrow::before {
       content: ''; display: block; width: 5px; height: 5px;
@@ -130,9 +140,10 @@
 
     h1 {
       font-size: clamp(48px, 9vw, 108px);
-      font-weight: 900; line-height: 0.88; letter-spacing: -0.045em;
-      color: var(--white); margin-bottom: 24px;
-      animation: fadeUp 0.7s 0.18s ease both;
+      font-weight: 900; line-height: 1.1; letter-spacing: -0.045em;
+      color: var(--white); margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.1s forwards;
     }
     h1 em { font-style: normal; color: var(--gold); }
 
@@ -140,8 +151,9 @@
     .audio-bars {
       display: flex; align-items: center; justify-content: center;
       gap: 5px; height: 36px;
-      margin-bottom: 28px;
-      animation: fadeUp 0.7s 0.22s ease both;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.2s forwards;
     }
     .bar {
       width: 3px; border-radius: 2px;
@@ -163,225 +175,296 @@
     }
 
     .subtitle {
-      font-size: clamp(15px, 2vw, 18px); line-height: 1.7;
-      color: rgba(245,245,240,0.65); max-width: 520px;
-      margin-bottom: 52px;
-      animation: fadeUp 0.7s 0.26s ease both;
+      font-size: clamp(15px, 2vw, 18px); line-height: 1.8;
+      color: rgba(245,245,240,0.65); max-width: 540px;
+      margin-bottom: 56px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.3s forwards;
     }
+
+    /* ── Urgency badge ── */
+    .urgency-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 11px; font-weight: 600; color: var(--gold);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.15s forwards;
+    }
+    .urgency-dot { width: 5px; height: 5px; border-radius: 50%; background: #FF6B6B; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
     /* ── Form card ── */
     .form-card {
-      width: 100%; max-width: 480px;
-      background: rgba(245,245,240,0.04);
-      border: 1px solid var(--border); border-radius: 20px;
-      padding: 32px 32px 24px; margin-bottom: 12px;
-      animation: fadeUp 0.7s 0.34s ease both;
+      width: 100%; max-width: 520px;
+      background: rgba(255,209,102,0.06);
+      border: 1px solid rgba(255,209,102,0.18);
+      border-radius: 24px;
+      padding: 40px 36px 28px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.4s forwards;
     }
     .form-label {
       display: block; font-size: 10px; font-weight: 700;
       letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 10px;
+      color: var(--gold); margin-bottom: 12px;
     }
-    .input-row { display: flex; gap: 8px; margin-bottom: 12px; }
+    .input-row { display: flex; gap: 8px; margin-bottom: 14px; }
     .email-input {
       flex: 1; min-width: 0;
-      background: rgba(245,245,240,0.06);
-      border: 1px solid var(--border); border-radius: 12px;
+      background: rgba(245,245,240,0.08);
+      border: 1px solid rgba(245,245,240,0.12); border-radius: 12px;
       padding: 14px 17px; font-size: 15px; font-family: 'Inter', sans-serif;
       color: var(--white); outline: none;
       transition: border-color 0.2s, background 0.2s;
     }
-    .email-input::placeholder { color: rgba(245,245,240,0.28); }
-    .email-input:focus { border-color: rgba(255,209,102,0.5); background: rgba(245,245,240,0.08); }
+    .email-input::placeholder { color: rgba(245,245,240,0.3); }
+    .email-input:focus { border-color: rgba(255,209,102,0.4); background: rgba(245,245,240,0.1); }
     .btn-notify {
       background: var(--gold); color: #080808;
-      border: none; border-radius: 12px; padding: 14px 22px;
+      border: none; border-radius: 12px; padding: 14px 28px;
       font-size: 14px; font-weight: 700; font-family: 'Inter', sans-serif;
       cursor: pointer; white-space: nowrap; flex-shrink: 0;
       display: flex; align-items: center; gap: 7px;
       transition: opacity 0.18s, transform 0.14s, box-shadow 0.18s;
-      box-shadow: 0 4px 20px rgba(255,209,102,0.3);
+      box-shadow: 0 8px 24px rgba(255,209,102,0.25);
     }
-    .btn-notify:hover  { opacity: .88; transform: translateY(-1px); box-shadow: 0 8px 28px rgba(255,209,102,0.4); }
-    .btn-notify:active { transform: scale(.97); }
-    .form-fine { font-size: 11px; color: #ffffff; line-height: 1.5; }
+    .btn-notify:hover  { opacity: .92; transform: translateY(-2px); box-shadow: 0 12px 32px rgba(255,209,102,0.35); }
+    .btn-notify:active { transform: scale(.98); }
+    .form-benefit {
+      font-size: 11px; color: rgba(245,245,240,0.55); line-height: 1.6;
+      display: flex; gap: 8px;
+    }
+    .form-benefit::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
     .success-msg {
       display: none; align-items: center; gap: 10px;
-      padding: 12px 16px; border-radius: 12px;
-      background: rgba(255,209,102,0.08); border: 1px solid rgba(255,209,102,0.22);
+      padding: 14px 18px; border-radius: 12px;
+      background: rgba(255,209,102,0.1); border: 1px solid rgba(255,209,102,0.25);
       color: var(--gold); font-size: 13px; font-weight: 500;
-      margin-bottom: 12px; text-align: left;
+      margin-bottom: 14px; text-align: left;
     }
 
     /* Social proof */
     .social-proof {
-      font-size: 12px; color: var(--dim); margin-bottom: 44px;
-      animation: fadeUp 0.7s 0.38s ease both;
+      font-size: 12px; color: var(--dim); margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.5s forwards;
     }
     .social-proof span { color: var(--gold); font-weight: 700; }
 
     /* ── Why listen cards ── */
     .why-section {
-      width: 100%; max-width: 680px;
-      margin-bottom: 44px;
-      animation: fadeUp 0.7s 0.42s ease both;
+      width: 100%; max-width: 700px;
+      margin-bottom: 64px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.6s forwards;
     }
     .why-title {
       font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-      color: var(--dim); margin-bottom: 16px;
+      color: var(--gold); margin-bottom: 20px;
     }
-    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .why-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
     .why-card {
       background: rgba(245,245,240,0.04); border: 1px solid var(--border);
-      border-radius: 16px; padding: 20px 16px; text-align: left;
-      transition: border-color 0.2s, background 0.2s;
+      border-radius: 16px; padding: 24px 18px; text-align: left;
+      transition: all 0.3s ease;
     }
-    .why-card:hover { border-color: rgba(255,209,102,0.2); background: rgba(255,209,102,0.03); }
+    .why-card:hover { 
+      border-color: rgba(255,209,102,0.3); 
+      background: rgba(255,209,102,0.05);
+      transform: translateY(-2px);
+    }
     .why-icon {
-      font-size: 20px; margin-bottom: 10px; display: block;
+      font-size: 24px; margin-bottom: 12px; display: block;
     }
-    .why-head { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
-    .why-desc { font-size: 11px; line-height: 1.6; color: var(--muted); }
+    .why-head { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .why-desc { font-size: 11px; line-height: 1.7; color: var(--muted); }
 
     /* ── Platforms ── */
     .platforms {
       display: flex; align-items: center; flex-wrap: wrap;
-      gap: 8px; justify-content: center;
-      animation: fadeUp 0.7s 0.46s ease both;
+      gap: 10px; justify-content: center;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.7s forwards;
+    }
+    .platform-label {
+      font-size: 10px; font-weight: 700; color: var(--gold);
+      letter-spacing: 0.1em; text-transform: uppercase;
+      width: 100%; margin-bottom: 8px;
     }
     .chip {
-      display: flex; align-items: center; gap: 6px; padding: 7px 14px;
-      border: 1px solid var(--border); border-radius: 100px;
-      font-size: 12px; font-weight: 500; color: var(--muted);
-      background: rgba(245,245,240,0.03);
-      transition: border-color 0.2s, color 0.2s, background 0.2s;
-      cursor: default;
+      display: flex; align-items: center; gap: 8px; padding: 9px 18px;
+      border: 1px solid rgba(255,209,102,0.15); border-radius: 100px;
+      font-size: 12px; font-weight: 600; color: var(--white);
+      background: rgba(255,209,102,0.04);
+      transition: all 0.3s ease;
     }
-    .chip:hover { border-color: rgba(255,209,102,0.3); color: var(--white); background: rgba(255,209,102,0.04); }
+    .chip:hover { 
+      border-color: rgba(255,209,102,0.4); 
+      background: rgba(255,209,102,0.08);
+      transform: translateY(-1px);
+    }
+    .chip svg { width: 14px; height: 14px; }
 
     /* ── Stats ── */
     .hero-stats {
       display: flex; align-items: center; gap: 32px; justify-content: center;
-      animation: fadeUp 0.7s 0.55s ease both;
+      padding-bottom: 48px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.8s forwards;
     }
     .hstat { text-align: center; }
-    .hstat-n { font-size: 22px; font-weight: 900; letter-spacing: -0.03em; color: var(--white); }
-    .hstat-l { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 3px; }
-    .hstat-div { width: 1px; height: 32px; background: var(--border); }
+    .hstat-n { font-size: 24px; font-weight: 900; letter-spacing: -0.03em; color: var(--white); }
+    .hstat-l { font-size: 9px; font-weight: 700; color: var(--muted); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 4px; }
+    .hstat-div { width: 1px; height: 36px; background: var(--border); }
 
     .hero-divider {
-      width: 1px; height: 56px;
-      background: linear-gradient(to bottom, transparent, var(--border), transparent);
-      margin: 56px 0 0;
-      animation: fadeUp 0.7s 0.5s ease both;
+      width: 48px; height: 1px;
+      background: var(--border);
+      margin: 0 auto 48px;
+      opacity: 0;
+      animation: fadeInScroll 0.8s ease 0.75s forwards;
     }
 
     /* ══════════ FOOTER ══════════ */
     footer {
       display: flex; flex-direction: column; align-items: center;
-      gap: 16px; padding: 36px 56px;
+      gap: 20px; padding: 48px 56px 56px;
       border-top: 1px solid var(--border); text-align: center;
     }
-    .f-copy { font-size: 13px; color: rgba(245,245,240,0.65); }
+    .f-copy { font-size: 12px; color: rgba(245,245,240,0.5); }
     .f-social { display: flex; gap: 14px; }
     .f-social a {
       display: flex; align-items: center; justify-content: center;
       width: 44px; height: 44px; border-radius: 50%;
       border: 1px solid var(--border); background: rgba(245,245,240,0.04);
-      text-decoration: none; transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      text-decoration: none; transition: all 0.3s ease;
     }
-    .f-social a:hover { transform: translateY(-2px); }
-    .f-social .social-ig { color:#E1306C; border-color:rgba(225,48,108,0.3); background:rgba(225,48,108,0.08); }
-    .f-social .social-ig:hover { box-shadow:0 4px 18px rgba(225,48,108,0.25); border-color:rgba(225,48,108,0.6); }
-    .f-social .social-yt { color:#FF0000; border-color:rgba(255,0,0,0.3); background:rgba(255,0,0,0.08); }
-    .f-social .social-yt:hover { box-shadow:0 4px 18px rgba(255,0,0,0.22); border-color:rgba(255,0,0,0.6); }
+    .f-social a:hover { 
+      transform: translateY(-3px);
+      border-color: rgba(255,209,102,0.3);
+      background: rgba(255,209,102,0.08);
+    }
+    .f-social .social-ig { color:#E1306C; }
+    .f-social .social-yt { color:#FF0000; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
+    @keyframes fadeInScroll {
+      from { opacity: 0; transform: translateY(12px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     /* ══ LAPTOP & PC ≥ 1200px ══ */
     @media (min-width: 1200px) {
-      .nav-logo img { width: 48px; height: 48px; }
-      .nav-logo span { font-size: 22px; }
+      .nav-logo img { width: 44px; height: 44px; }
+      .nav-logo span { font-size: 20px; }
       h1 { font-size: clamp(72px, 10vw, 120px); }
-      .platforms { gap: 12px; }
     }
 
     /* ══ TABLET 768px - 1024px ══ */
     @media (min-width: 769px) and (max-width: 1024px) {
-      nav { padding: 12px 32px; }
-      footer { padding: 24px 32px; }
+      nav { padding: 16px 32px 12px; }
+      footer { padding: 36px 32px 42px; }
       .hero { padding: 60px 24px 72px; }
       h1 { font-size: clamp(56px, 9vw, 96px); }
       .why-grid { grid-template-columns: repeat(2, 1fr); }
-      .platforms { gap: 10px; flex-wrap: wrap; }
-      .chip { font-size: 13px; padding: 8px 16px; }
+      .platforms { gap: 10px; }
+      .chip { font-size: 12px; padding: 8px 16px; }
     }
 
     /* ══ TABLET ≤ 768px ══ */
     @media (max-width: 768px) {
-      nav { padding: 12px 24px; }
-      .nav-logo img { width: 40px; height: 40px; }
+      nav { padding: 14px 24px 12px; }
+      .nav-logo img { width: 38px; height: 38px; }
       .nav-logo span { font-size: 16px; }
-      footer { padding: 20px 24px; }
+      .founder-bar { padding: 12px 24px; font-size: 11px; }
+      footer { padding: 32px 24px 40px; }
       .hero { padding: 48px 20px 56px; }
       h1 { font-size: clamp(48px, 11vw, 72px); }
       .subtitle { font-size: 14px; margin-bottom: 40px; }
-      .form-card { padding: 28px 24px 20px; }
+      .form-card { padding: 32px 24px 20px; max-width: 100%; border-radius: 20px; }
       .why-grid { grid-template-columns: 1fr; }
       .platforms { gap: 8px; }
-      .chip { font-size: 12px; padding: 7px 13px; }
+      .chip { font-size: 11px; padding: 7px 14px; }
+      .hero-stats { gap: 24px; }
     }
 
     /* ══ MOBILE ≤ 480px ══ */
     @media (max-width: 480px) {
-      nav { padding: 12px 16px; }
-      .nav-logo img { width: 36px; height: 36px; }
-      .nav-logo span { font-size: 14px; }
+      nav { padding: 12px 16px 10px; }
+      .nav-logo img { width: 34px; height: 34px; }
+      .nav-logo span { font-size: 13px; }
+      .founder-bar { padding: 10px 16px; font-size: 10px; }
       .hero { padding: 40px 16px 48px; }
-      h1 { font-size: clamp(38px, 13vw, 56px); line-height: 1; margin-bottom: 16px; }
-      .eyebrow { margin-bottom: 24px; padding: 5px 14px; font-size: 10px; }
-      .subtitle { font-size: 14px; margin-bottom: 32px; max-width: 100%; }
-      .audio-bars { height: 32px; margin-bottom: 24px; }
+      h1 { font-size: clamp(38px, 13vw, 56px); line-height: 1.1; margin-bottom: 24px; }
+      .eyebrow { margin-bottom: 20px; padding: 5px 12px; font-size: 9px; }
+      .subtitle { font-size: 13px; margin-bottom: 28px; max-width: 100%; }
+      .urgency-badge { margin-bottom: 20px; }
+      .audio-bars { height: 30px; margin-bottom: 20px; }
       .bar { width: 2.5px; }
-      .form-card { max-width: 100%; padding: 24px 20px 18px; border-radius: 16px; margin-bottom: 12px; }
+      .form-card { 
+        padding: 24px 18px 16px; 
+        border-radius: 16px;
+        margin-bottom: 10px;
+      }
       .form-label { margin-bottom: 10px; font-size: 9px; }
-      .input-row { flex-direction: column; gap: 10px; }
+      .input-row { flex-direction: column; gap: 10px; margin-bottom: 10px; }
       .email-input { padding: 12px 14px; font-size: 14px; }
-      .btn-notify { width: 100%; justify-content: center; padding: 14px 16px; font-size: 13px; }
-      .form-fine { font-size: 11px; }
+      .btn-notify { 
+        width: 100%; 
+        justify-content: center; 
+        padding: 13px 16px;
+        font-size: 13px;
+      }
+      .form-benefit { font-size: 10px; }
       .social-proof { font-size: 11px; margin-bottom: 32px; }
-      .why-section { max-width: 100%; margin-bottom: 32px; }
+      .why-section { max-width: 100%; margin-bottom: 40px; }
       .why-grid { grid-template-columns: 1fr; gap: 10px; }
       .why-card { padding: 16px 14px; }
-      .why-icon { font-size: 18px; }
+      .why-icon { font-size: 20px; }
       .why-head { font-size: 12px; }
-      .why-desc { font-size: 11px; }
-      .platforms { gap: 8px; justify-content: center; flex-wrap: wrap; padding: 0 16px; }
-      .chip { font-size: 11px; padding: 6px 12px; flex: 0 1 calc(50% - 4px); }
-      .chip svg { width: 11px; height: 11px; }
-      .hero-stats { gap: 16px; flex-wrap: wrap; padding: 0 16px; }
-      .hstat-n { font-size: 18px; }
+      .why-desc { font-size: 10px; }
+      .platforms { 
+        gap: 8px; 
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 0 16px;
+        margin-bottom: 36px;
+      }
+      .platform-label { margin-bottom: 6px; }
+      .chip { 
+        font-size: 10px; 
+        padding: 6px 12px;
+        flex: 0 1 calc(50% - 4px);
+      }
+      .chip svg { width: 12px; height: 12px; }
+      .hero-stats { 
+        gap: 16px;
+        padding-bottom: 32px;
+      }
+      .hstat-n { font-size: 20px; }
       .hstat-l { font-size: 8px; }
-      .hero-divider { margin: 40px 0 0; height: 40px; }
-      footer { padding: 16px 16px; gap: 12px; }
+      .hstat-div { height: 28px; }
+      .hero-divider { width: 32px; margin-bottom: 32px; }
+      footer { 
+        padding: 24px 16px 32px; 
+        gap: 16px;
+      }
       .f-social { gap: 12px; }
       .f-social a { width: 40px; height: 40px; }
       .f-social a svg { width: 16px; height: 16px; }
-      .f-copy { font-size: 12px; }
+      .f-copy { font-size: 11px; }
     }
 
     @media (max-width: 360px) {
       h1 { font-size: clamp(36px, 12vw, 48px); }
       .nav-logo img { width: 32px; height: 32px; }
       .nav-logo span { font-size: 12px; }
-      .eyebrow { font-size: 9px; padding: 4px 12px; }
-      .subtitle { font-size: 13px; }
+      .eyebrow { font-size: 8px; padding: 4px 10px; }
+      .subtitle { font-size: 12px; }
       .form-card { padding: 20px 16px 14px; }
       .platforms { gap: 6px; }
-      .chip { flex: 0 1 calc(50% - 3px); font-size: 10px; }
+      .chip { flex: 0 1 calc(50% - 3px); font-size: 9px; }
     }
   </style>
 </head>
@@ -399,10 +482,20 @@
     </a>
   </nav>
 
+  <!-- FOUNDER BAR -->
+  <div class="founder-bar">
+    By <span>Priyadharshan S</span> • Multi-founder • Building at the origin
+  </div>
+
   <!-- HERO -->
   <main class="hero">
 
     <span class="eyebrow">Origin Grid Podcast</span>
+
+    <div class="urgency-badge">
+      <span class="urgency-dot"></span>
+      First listeners get exclusive early-bird access
+    </div>
 
     <h1>Where ideas <em>begin.</em></h1>
 
@@ -414,34 +507,33 @@
     </div>
 
     <p class="subtitle">
-      Deep conversations at the origin of big ideas, stories,
-      systems, and the people who build things from the ground up.
+      Deep conversations at the origin of big ideas, stories, systems, and the people who build things from the ground up. No scripts. No filters.
     </p>
 
     <!-- Email form -->
     <div class="form-card">
-      <label class="form-label" for="email-input">Your email address</label>
+      <label class="form-label">Join the inner circle</label>
       <div class="success-msg" id="success">
         <svg width="15" height="15" viewBox="0 0 16 16" fill="none" style="flex-shrink:0">
           <circle cx="8" cy="8" r="7.5" stroke="#FFD166" stroke-width="1"/>
           <path d="M5 8.2l2 2 4-4" stroke="#FFD166" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        You're on the list &mdash; first episode goes straight to you.
+        You're in. Episode 01 launches September 2026.
       </div>
       <div class="input-row" id="form-row">
         <input id="email-input" class="email-input" type="email"
-               placeholder="you@domain.com" autocomplete="email" />
+               placeholder="your@email.com" autocomplete="email" />
         <button class="btn-notify" onclick="handleSubmit()">
-          Notify me
+          Get Access
           <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
             <path d="M2 7h10M8 3l4 4-4 4" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
       </div>
-      <p class="form-fine">No spam. Unsubscribe anytime. Early listeners get exclusive first-episode access.</p>
+      <p class="form-benefit">Exclusive first-episode access + weekly insights</p>
     </div>
 
-    <p class="social-proof">Join <span>247</span> early listeners already on the list</p>
+    <p class="social-proof"><span>318</span> founders & builders already waiting</p>
 
     <!-- Why listen -->
     <div class="why-section">
@@ -450,32 +542,33 @@
         <div class="why-card">
           <span class="why-icon">🎙</span>
           <div class="why-head">Real Conversations</div>
-          <div class="why-desc">No scripts. No filters. Just honest dialogue with people who've built something real.</div>
+          <div class="why-desc">No scripts. No filters. Honest dialogue with people who've actually built something.</div>
         </div>
         <div class="why-card">
           <span class="why-icon">💡</span>
-          <div class="why-head">Big Ideas</div>
-          <div class="why-desc">Every episode traces an idea back to its origin — where it started and why it matters.</div>
+          <div class="why-head">Origin Stories</div>
+          <div class="why-desc">Trace every idea back to where it started. Understand the thinking behind the building.</div>
         </div>
         <div class="why-card">
-          <span class="why-icon">🌍</span>
-          <div class="why-head">Builders & Makers</div>
-          <div class="why-desc">Entrepreneurs, creators, and changemakers sharing the story behind the story.</div>
+          <span class="why-icon">🚀</span>
+          <div class="why-head">For Builders</div>
+          <div class="why-desc">Founders, makers, entrepreneurs sharing the story behind the story.</div>
         </div>
       </div>
     </div>
 
     <!-- Platforms -->
     <div class="platforms">
+      <span class="platform-label">Available everywhere</span>
       <div class="chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
           <path d="M7 15.5c2.8-1 5.6-1 8.4 0M7.5 12c3.2-1.2 6.3-1.2 9 0M8 8.5c2.8-.8 5.5-.8 8 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
         Spotify
       </div>
       <div class="chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
           <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.5"/>
           <circle cx="12" cy="11" r="3" stroke="currentColor" stroke-width="1.5"/>
           <path d="M12 14v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
@@ -483,14 +576,14 @@
         Apple Podcasts
       </div>
       <div class="chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
           <rect x="2" y="5" width="20" height="14" rx="4" stroke="currentColor" stroke-width="1.5"/>
           <path d="M10 9.5l5 2.5-5 2.5V9.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
         </svg>
         YouTube
       </div>
       <div class="chip">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
           <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/>
           <path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
@@ -503,18 +596,18 @@
     <!-- Stats -->
     <div class="hero-stats">
       <div class="hstat">
-        <div class="hstat-n">S1</div>
-        <div class="hstat-l">Season One</div>
+        <div class="hstat-n">Podcast</div>
+        <div class="hstat-l">Active</div>
       </div>
       <div class="hstat-div"></div>
       <div class="hstat">
         <div class="hstat-n">Weekly</div>
-        <div class="hstat-l">New Episodes</div>
+        <div class="hstat-l">New Drops</div>
       </div>
       <div class="hstat-div"></div>
       <div class="hstat">
-        <div class="hstat-n">2026</div>
-        <div class="hstat-l">Launching</div>
+        <div class="hstat-n">Listen</div>
+        <div class="hstat-l">Now</div>
       </div>
     </div>
 
@@ -543,6 +636,19 @@
 </div>
 
 <script>
+  /* ── Scroll-hiding header ── */
+  var lastScrollTop = 0;
+  var nav = document.querySelector('nav');
+  window.addEventListener('scroll', function() {
+    var currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+    if (currentScroll > lastScrollTop && currentScroll > 100) {
+      nav.classList.add('hidden');
+    } else {
+      nav.classList.remove('hidden');
+    }
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+  });
+
   /* ── Email form ── */
   var FORMSPREE_ID = 'YOUR_FORM_ID';
   function handleSubmit() {
@@ -567,14 +673,14 @@
         document.getElementById('success').style.display = 'flex';
       } else {
         btn.disabled = false;
-        btn.innerHTML = 'Notify me <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        btn.innerHTML = 'Get Access <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
         input.style.borderColor = 'rgba(255,80,80,0.6)';
         setTimeout(function () { input.style.borderColor = ''; }, 1600);
       }
     })
     .catch(function() {
       btn.disabled = false;
-      btn.innerHTML = 'Notify me <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+      btn.innerHTML = 'Get Access <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="#080808" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     });
   }
   document.getElementById('email-input').addEventListener('keydown', function (e) {
